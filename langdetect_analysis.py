@@ -47,7 +47,8 @@ def analyze_languages_with_langdetect(csv_file, language_name):
     
     # Process each post
     for idx, row in df.iterrows():
-        content = row['content'] if pd.notna(row['content']) else ''
+        # content = row['content'] if pd.notna(row['content']) else '' # For Reddit Datasets
+        content = row['Text'] if pd.notna(row['Text']) else ''
         
         if content and len(content.strip()) > 10:  # Only process non-empty content
             # Clean the text
@@ -79,7 +80,8 @@ def analyze_languages_with_langdetect(csv_file, language_name):
     # Save results to CSV
     if results_data:
         results_df = pd.DataFrame(results_data)
-        output_filename = f"langdetect_results_{language_name.lower()}.csv"
+        # output_filename = f"langdetect_results_{language_name.lower()}.csv" # For Reddit Datasets
+        output_filename = f"langdetect_news_results_{language_name.lower()}.csv"
         results_df.to_csv(output_filename, index=False, encoding='utf-8')
         
         print(f"\\nResults saved to: {output_filename}")
@@ -111,9 +113,14 @@ def analyze_languages_with_langdetect(csv_file, language_name):
 def main():
     """Main function to analyze all three datasets"""
     # Analyze each dataset
-    yoruba_results = analyze_languages_with_langdetect('yoruba_reddit_posts.csv', 'Yoruba')
-    kinyarwanda_results = analyze_languages_with_langdetect('kinyarwanda_reddit_posts.csv', 'Kinyarwanda')
-    amharic_results = analyze_languages_with_langdetect('amharic_reddit_posts.csv', 'Amharic')
+    # yoruba_results = analyze_languages_with_langdetect('yoruba_reddit_posts.csv', 'Yoruba')
+    # kinyarwanda_results = analyze_languages_with_langdetect('kinyarwanda_reddit_posts.csv', 'Kinyarwanda')
+    # amharic_results = analyze_languages_with_langdetect('amharic_reddit_posts.csv', 'Amharic')
+
+    # DETECTING NEWS DATA
+    yoruba_results = analyze_languages_with_langdetect('yoruba_news.csv', 'Yoruba')
+    kinyarwanda_results = analyze_languages_with_langdetect('kinyarwanda.csv', 'Kinyarwanda')
+    amharic_results = analyze_languages_with_langdetect('amharic_csv.csv', 'Amharic')
     
     print("\\n" + "="*60)
     print("ALL LANGDETECT ANALYSES COMPLETED!")
